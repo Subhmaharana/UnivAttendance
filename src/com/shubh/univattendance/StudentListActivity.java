@@ -91,9 +91,12 @@ public class StudentListActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 
 	    super.onListItemClick(l, v, position, id);
-	    Object o = this.getListAdapter().getItem(position);
-	    String nm = o.toString();
-	    Toast.makeText(this, "You have chosen the Student: " + " " + nm, Toast.LENGTH_LONG).show();
+	    
+	    
+	    HashMap<String, String> map = (HashMap<String, String>) this.getListAdapter().getItem(position);
+	    String name = map.get("studname");
+	    String roll = map.get("studroll");	    
+	    Toast.makeText(this, "You have chosen the Student with " + "roll = " + roll + " & name= " + name, Toast.LENGTH_LONG).show();
 	}
 
 	
@@ -102,6 +105,8 @@ public class StudentListActivity extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		Intent i = new Intent(StudentListActivity.this, TeacherActivity.class);
+		i.putExtra("keyTID", t_id);
+		i.putExtra("keyCOURSE", coursename);
 		startActivity(i);
 		finish();
 	}

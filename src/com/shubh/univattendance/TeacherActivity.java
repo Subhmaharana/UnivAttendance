@@ -63,7 +63,8 @@ public class TeacherActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
 		Intent i = new Intent(TeacherActivity.this, CourseActivity.class);
-		i.putExtra("key", t_id);
+		i.putExtra("keyTID", t_id);
+		i.putExtra("keyCOURSE", coursename);
 		startActivity(i);
 		finish();
 	}

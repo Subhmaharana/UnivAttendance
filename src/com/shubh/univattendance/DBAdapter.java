@@ -165,7 +165,7 @@ public class DBAdapter extends Activity {
 		Log.i("SHUBH", "GETTING STUDENTS by " + sem);
 		Cursor mCursor = mDb.query(true, DATABASE_TABLE2, new String[] {
 				KEY_STUDENT_NAME, KEY_STUDENT_ROLL }, KEY_SEM + " = " + sem,
-				null, null, null, null, null);
+				null, null, null, KEY_STUDENT_ROLL, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
