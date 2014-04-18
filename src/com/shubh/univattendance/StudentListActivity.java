@@ -60,6 +60,7 @@ public class StudentListActivity extends ListActivity {
 				c.moveToNext();
 			}
 			c.close();
+			db.close();
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(),
 					"Could not retrieve course Details", Toast.LENGTH_LONG)
@@ -71,8 +72,8 @@ public class StudentListActivity extends ListActivity {
 					R.layout.custom_row_view, new String[] { "studname",
 							"studroll" }, new int[] { R.id.text1, R.id.text2});
 			populateList();
-
 			setListAdapter(adapter);
+			
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), "Null", Toast.LENGTH_LONG)
 					.show();
@@ -91,12 +92,26 @@ public class StudentListActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 
 	    super.onListItemClick(l, v, position, id);
-	    
+	    String attended = "";
+	    double perattended = 0;
+	    Integer noOfClass = 0 ;
 	    
 	    HashMap<String, String> map = (HashMap<String, String>) this.getListAdapter().getItem(position);
 	    String name = map.get("studname");
-	    String roll = map.get("studroll");	    
-	    Toast.makeText(this, "You have chosen the Student with " + "roll = " + roll + " & name= " + name, Toast.LENGTH_LONG).show();
+	    String roll = map.get("studroll");	
+	    
+	    db.open();
+	    attended = db.getNoOfClassAttended(roll,coursename).toString();
+	    noOfClass = db.getNoOfClassTaken(coursename);
+	    Log.i("SHUBH", "no of classes attended " + Integer.parseInt(attended));
+	    Log.i("SHUBH", "recieved no of classes " + noOfClass);
+	    db.close();
+	    
+	    perattended = (Integer.parseInt(attended)*100/noOfClass);
+	    Log.i("SHUBH", "percentage of classes " + perattended);
+	    
+	    Toast.makeText(this, "no of class attended : " + attended + "\n % of attendance : " + perattended + "%", Toast.LENGTH_LONG).show();
+	    
 	}
 
 	

@@ -224,4 +224,57 @@ public class DBAdapter extends Activity {
 
 	}
 
+	public Integer getNoOfClassAttended(String roll, String coursename) {
+		// TODO Auto-generated method stub
+		try {
+			Integer attended = 0;
+			String[] selectionArgs = { roll , coursename };
+			Cursor mCursor = mDb.rawQuery(" " +
+					" SELECT * " +
+					" FROM attendance_data A " +
+					" INNER JOIN class_data C " +
+					" ON A.class_id = C.class_id" +
+					" WHERE A.stud_roll = ? " +
+					" AND C.course_name = ? ", selectionArgs);
+			if(mCursor!= null){
+				attended = mCursor.getCount();
+				mCursor.close();
+			}
+			return attended;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public Integer getNoOfClassTaken(String coursename) {
+		// TODO Auto-generated method stub
+		try {
+
+			Integer countA ;
+			String[] columns = { "class_id" };
+
+			// WHERE clause
+			String selection = "course_name=?";
+
+			// WHERE clause arguments
+			String[] selectionArgs = { coursename };
+
+			Cursor cursor = mDb.query(DATABASE_TABLE5, columns, selection,
+					selectionArgs, null, null, null);
+			if (cursor != null) {
+				countA = cursor.getCount();
+				cursor.close();
+				Log.i("SHUBH", "returning no of classes " + countA);
+				return countA;
+			}
+			System.out.println("Cursor NuLL");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
